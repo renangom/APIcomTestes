@@ -7,6 +7,22 @@ router.get('/posts', async (req, res) => {
     res.json(posts)
 });
 
+router.post('/posts', async (req,res) => {
+    const post = req.body;
+    const newPost = await postService.savePost(post)
+    res.json(newPost)
+})
+
+router.put('/posts/:id', async (req,res) => {
+    const post = req.body;
+    await postService.updatePost(req.params.id, post)
+    res.end();
+})
+
+router.delete('/posts/:id', async (req,res) => {
+    await postService.deletePost(req.params.id)
+    res.end()
+})
 
 
 module.exports = router;
