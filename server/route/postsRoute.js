@@ -10,18 +10,22 @@ router.get('/posts', async (req, res) => {
 router.post('/posts', async (req,res) => {
     const post = req.body;
     const newPost = await postService.savePost(post)
-    res.json(newPost)
+    res.status(201).json(newPost)
 })
 
 router.put('/posts/:id', async (req,res) => {
     const post = req.body;
-    await postService.updatePost(req.params.id, post)
-    res.end();
+    try{
+        await postService.updatePost(req.params.id, post)
+        res.status(204).end();
+    }catch(error){
+        res.status(404).end();
+    }
 })
 
 router.delete('/posts/:id', async (req,res) => {
     await postService.deletePost(req.params.id)
-    res.end()
+    res.status(204).end()
 })
 
 
